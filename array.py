@@ -1,31 +1,23 @@
 class DynamicArray:
-    def __init__(self):
-        self.capacity = 2  # Initial capacity of the array
-        self.size = 0      # Current number of elements
-        self.data = [0] * self.capacity  # Initialize array with fixed capacity
+    def __init__(self, initial_capacity=2):
+        self.capacity = initial_capacity  
+        self.size = 0                     # Number of elements in the array
+        self.data = [None] * self.capacity  
 
     def resize(self):
-        
-        self.capacity *= 2
-        new_data = [0] * self.capacity
+        self.capacity *= 2                  
+        new_data = [None] * self.capacity   
         for i in range(self.size):
-            new_data[i] = self.data[i]
-        self.data = new_data
+            new_data[i] = self.data[i]      
+        self.data = new_data                
 
-    def push_back(self, value):
-        
+    def add(self, value):
         if self.size == self.capacity:
-            self.resize()
-        self.data[self.size] = value
+            self.resize()                   
+        self.data[self.size] = value        
         self.size += 1
 
-    def pop_back(self):
-        
-        if self.size > 0:
-            self.size -= 1
-
     def get(self, index):
-        
         if 0 <= index < self.size:
             return self.data[index]
         raise IndexError("Index out of range")
@@ -36,14 +28,26 @@ class DynamicArray:
     def get_capacity(self):
         return self.capacity
 
-# Example 
-arr = DynamicArray()
-arr.push_back(5)
-arr.push_back(10)
-arr.push_back(15)
 
-print("Array elements:", [arr.get(i) for i in range(arr.get_size())])
-print("Size:", arr.get_size(), "Capacity:", arr.get_capacity())
 
-arr.pop_back()
-print("After pop_back, Size:", arr.get_size())
+if __name__ == "__main__":
+    arr = DynamicArray()
+
+    
+    for i in range(10):
+        arr.add(i)
+        print(f"Added {i}, Size: {arr.get_size()}, Capacity: {arr.get_capacity()}")
+
+    
+    try:
+        for i in range(arr.get_size()):
+            print(f"Element at index {i}: {arr.get(i)}")
+    except IndexError as e:
+        print(e)
+
+    
+    try:
+        print(f"Element at index 20: {arr.get(20)}")
+    except IndexError as e:
+        print(e)
+
